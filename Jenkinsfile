@@ -29,13 +29,6 @@ node ('hyp-x86_64') {
                 sh 'git fetch --tag'
             }
 
-            if (!(env.BRANCH_NAME == 'master' && env.JOB_BASE_NAME == 'master')) {
-                stage("Check Whitelist") {
-                    readTrusted 'bin/whitelist'
-                    sh './bin/whitelist "$CHANGE_AUTHOR" /etc/jenkins-authorized-builders'
-                }
-            }
-
             stage("Check for Signed-Off Commits") {
                 sh '''#!/bin/bash -l
                     if [ -v CHANGE_URL ] ;
