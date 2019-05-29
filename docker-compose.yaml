@@ -58,6 +58,7 @@ services:
     command: |
       bash -c "
         sawtooth keygen &&
+        echo 'url = \"http://rest-api:8008\"' >/etc/sawtooth/cli.toml
         tail -f /dev/null
       "
     stop_signal: SIGKILL
