@@ -24,6 +24,7 @@ services:
     container_name: sawtooth-shell-default
     entrypoint: "bash -c \"\
         sawtooth keygen && \
+        echo 'url = \"http://rest-api-0:8008\"' >/etc/sawtooth/cli.toml
         tail -f /dev/null \
         \""
 
