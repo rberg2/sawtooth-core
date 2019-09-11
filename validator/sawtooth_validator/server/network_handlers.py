@@ -210,16 +210,6 @@ def add(
         GossipMessageDuplicateHandler(completer, has_block, has_batch),
         thread_pool)
 
-    # GOSSIP_MESSAGE ) Verify Network Permissions
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_MESSAGE,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
-        thread_pool)
-
     # GOSSIP_MESSAGE ) Verifies signature
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_MESSAGE,
@@ -230,17 +220,6 @@ def add(
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_MESSAGE,
         structure_verifier.GossipHandlerStructureVerifier(),
-        thread_pool)
-
-    # GOSSIP_MESSAGE ) Verifies that the node is allowed to publish a
-    # block
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_MESSAGE,
-        NetworkConsensusPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
         thread_pool)
 
     # GOSSIP_MESSAGE ) Determines if this is a consensus message and notifies
@@ -270,15 +249,6 @@ def add(
 
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_BLOCK_REQUEST,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
-        thread_pool)
-
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_BLOCK_REQUEST,
         BlockResponderHandler(responder, gossip),
         thread_pool)
 
@@ -291,16 +261,6 @@ def add(
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_BLOCK_RESPONSE,
         GossipBlockResponseHandler(completer, responder),
-        thread_pool)
-
-    # GOSSIP_MESSAGE 2) Verify Network Permissions
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_BLOCK_RESPONSE,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
         thread_pool)
 
     # GOSSIP_BLOCK_RESPONSE 3) Verifies signature
@@ -329,39 +289,12 @@ def add(
 
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_BATCH_BY_BATCH_ID_REQUEST,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
-        thread_pool)
-
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_BATCH_BY_BATCH_ID_REQUEST,
         BatchByBatchIdResponderHandler(responder, gossip),
         thread_pool)
 
     dispatcher.add_handler(
         validator_pb2.Message.GOSSIP_BATCH_BY_TRANSACTION_ID_REQUEST,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
-        thread_pool)
-
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_BATCH_BY_TRANSACTION_ID_REQUEST,
         BatchByTransactionIdResponderHandler(responder, gossip),
-        thread_pool)
-
-    dispatcher.add_handler(
-        validator_pb2.Message.GOSSIP_BATCH_RESPONSE,
-        NetworkPermissionHandler(
-            network=interconnect,
-            permission_verifier=permission_verifier,
-            gossip=gossip
-        ),
         thread_pool)
 
     dispatcher.set_preprocessor(
