@@ -192,11 +192,11 @@ class BlockStore(ffi.OwnedPointer):
             (vec_ptr, vec_len, vec_cap) = ffi.prepare_vec_result()
 
             try:
-                _pylibexec('commit_store_get_chain_head',
-                           self.pointer,
-                           ctypes.byref(vec_ptr),
-                           ctypes.byref(vec_len),
-                           ctypes.byref(vec_cap))
+                _libexec('commit_store_get_chain_head',
+                         self.pointer,
+                         ctypes.byref(vec_ptr),
+                         ctypes.byref(vec_len),
+                         ctypes.byref(vec_cap))
             except ValueError:
                 return None
 
