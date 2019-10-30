@@ -223,9 +223,7 @@ services:
             sawtooth.consensus.pbft.members=\\['\"'$$(cat /pbft-shared/validators/validator-0.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-1.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-2.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-3.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-4.pub)'\"'\\] \
             sawtooth.publisher.max_batches_per_block=1200 \
             -o config.batch
-        fi &&
-        if [ ! -e /var/lib/sawtooth/genesis.batch ]; then
-          sawadm genesis config-genesis.batch config.batch
+         sawadm genesis config-genesis.batch config.batch
         fi &&
         if [ -e /pbft-shared/validators/my_key-0.priv ]; then
           mkdir -p /root/.sawtooth/keys || true
